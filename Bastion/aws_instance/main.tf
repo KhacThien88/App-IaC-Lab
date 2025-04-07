@@ -1,4 +1,4 @@
-resource "aws_instance" "jenkins-master" {
+resource "aws_instance" "bastion-master" {
   ami                         = var.ami
   instance_type               = var.instance-type
   key_name                    = var.key_name
@@ -13,7 +13,7 @@ resource "aws_instance" "jenkins-master" {
   provisioner "local-exec" {
     command = <<EOF
 aws --profile ${var.profile} ec2 wait instance-status-ok --region ${var.region} --instance-ids ${self.id} 
-ansible-playbook --extra-vars 'passed_in_hosts=tag_Name_${self.tags.Name}' ${var.ansible_playbook_path}
+ansible-playbook --extra-vars 'passed_in_hosts=tag_Name_bastion-master' ${var.ansible_playbook_path}
 EOF
   }
   tags = {
