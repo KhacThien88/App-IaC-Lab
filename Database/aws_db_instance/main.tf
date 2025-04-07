@@ -19,19 +19,3 @@ resource "aws_db_instance" "mysql" {
     Name = "mysql-instance"
   }
 }
-resource "null_resource" "init_db" {
-  depends_on = [aws_db_instance.mysql]
-
-  provisioner "local-exec" {
-    command = <<EOF
-      echo "Waiting for DB to become available..."
-      sleep 30
-      mysql -h ${aws_db_instance.mysql.address} \
-            -P ${aws_db_instance.mysql.port} \
-            -u ${aws_db_instance.mysql.username} \
-            -p"${var.password}" < init_db.sql
-    EOF
-
-    working_dir = path.module
-  }
-}
