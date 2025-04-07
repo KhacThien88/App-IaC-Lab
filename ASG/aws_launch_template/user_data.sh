@@ -1,7 +1,15 @@
 #!/bin/bash
 apt-get update -y
 apt-get install -y curl jq awscli git
-
+apt update
+apt install mysql-server
+systemctl start mysql
+echo "Waiting for DB to become available..."
+      sleep 30
+      mysql -h ${aws_db_instance.mysql.address} \
+            -P ${aws_db_instance.mysql.port} \
+            -u ${aws_db_instance.mysql.username} \
+            -p"${var.password}" < init_db.sql
 cd /home/ubuntu
 git clone https://github.com/KhacThien88/CloudHCMUS_Lab01_BE app
 cd app
