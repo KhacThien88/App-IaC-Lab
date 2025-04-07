@@ -1,0 +1,12 @@
+- hosts: "{{ passed_in_hosts }}"
+  become: true
+  tasks:
+    - name: Copy SSH private key to remote machine
+      copy:
+        src: ~/.ssh/id_rsa
+        dest: /root/.ssh/id_rsa
+        owner: root
+        group: root
+        mode: 0600
+    
+    
