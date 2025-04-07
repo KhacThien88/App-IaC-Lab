@@ -62,7 +62,7 @@ variable "target_scale_up" {
 }
 variable "site-name" {
   type    = string
-  default = "todoapp"
+  default = "todoapp-backend"
 }
 variable "dns-name" {
   type    = string
