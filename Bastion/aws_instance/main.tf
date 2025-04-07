@@ -1,4 +1,3 @@
-
 resource "aws_instance" "jenkins-master" {
   ami                         = var.ami
   instance_type               = var.instance-type

@@ -76,7 +76,7 @@ variable "db_username" {
 variable "name_secret" {
   type      = string
   sensitive = true
-  default   = "mysql_lab01_hcmus"
+  default   = "mysqldb_lab01_hcmus"
 }
 variable "path_to_file_key" {
   type    = string

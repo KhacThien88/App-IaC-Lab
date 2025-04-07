@@ -1,5 +1,5 @@
 resource "aws_security_group" "bastion_host_sg" {
-  name        = "nodejs-app-sg"
+  name        = "bastion-host-sg"
   description = "Security group for Bastion host"
   vpc_id      = var.vpc_id
 
