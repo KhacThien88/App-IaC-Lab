@@ -25,7 +25,7 @@ resource "null_resource" "init_db" {
   provisioner "local-exec" {
     command = <<EOF
       echo "Waiting for DB to become available..."
-      sleep 60
+      sleep 200
       mysql -h ${aws_db_instance.mysql.address} \
             -P ${aws_db_instance.mysql.port} \
             -u ${aws_db_instance.mysql.username} \
