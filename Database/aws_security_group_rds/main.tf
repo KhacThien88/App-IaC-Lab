@@ -7,14 +7,14 @@ resource "aws_security_group" "rds_sg" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/24"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
 
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["10.0.0.0/24"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
   tags = {
     Name = "db-sg"

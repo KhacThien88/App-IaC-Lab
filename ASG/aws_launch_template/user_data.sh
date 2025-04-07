@@ -1,30 +1,45 @@
 #!/bin/bash
-apt-get update -y
-apt-get install -y curl jq awscli git
-apt update
-apt install mysql-server
-systemctl start mysql
-echo "Waiting for DB to become available..."
-      sleep 30
-      mysql -h ${aws_db_instance.mysql.address} \
-            -P ${aws_db_instance.mysql.port} \
-            -u ${aws_db_instance.mysql.username} \
-            -p"${var.password}" < init_db.sql
+set -euo pipefail  # Fail on errors and undefined variables
+
+# Update and install packages
+sudo apt-get update -y
+sudo apt-get install -y curl jq awscli git mysql-client
+
+sudo systemctl start mysql
+sudo systemctl enable mysql
+
+# Install Node.js (more secure method)
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+
+# Clone application
 cd /home/ubuntu
-git clone https://github.com/KhacThien88/CloudHCMUS_Lab01_BE app
+sudo -u ubuntu git clone https://github.com/KhacThien88/CloudHCMUS_Lab01_BE app
 cd app
 
-PARAM_JSON=$(aws ssm get-parameter --name "/credential-login" --with-decryption --query "Parameter.Value" --output text)
+# Get database credentials securely
+PARAM_JSON=$(sudo -u ubuntu aws ssm get-parameter --name "credential-login" --with-decryption --query "Parameter.Value" --output text)
 
-echo "$PARAM_JSON" | jq -r 'to_entries[] | "\(.key)=\(.value)"' > /home/ubuntu/app/.env
-chown ubuntu:ubuntu /home/ubuntu/app/.env
-chmod 600 /home/ubuntu/app/.env
+# Create .env file with proper permissions
+sudo -u ubuntu bash -c "echo \"$PARAM_JSON\" | jq -r 'to_entries[] | \"\(.key)=\(.value)\"' > /home/ubuntu/app/.env"
+sudo chown ubuntu:ubuntu /home/ubuntu/app/.env
+sudo chmod 600 /home/ubuntu/app/.env
 
-curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-apt-get install -y nodejs
+SECRET_NAME="mysqldb_lab01_hcmus_v1"
+SECRET_JSON=$(aws secretsmanager get-secret-value --name "$SECRET_NAME" --query SecretString --output text)
+RDS_ENDPOINT=$(echo "$SECRET_JSON" | jq -r '.host')
+RDS_USERNAME=$(echo "$SECRET_JSON" | jq -r '.username')
+RDS_PASSWORD=$(echo "$SECRET_JSON" | jq -r '.password')
+RDS_PORT=$(echo "$SECRET_JSON" | jq -r '.port')
+RDS_DB_NAME=$(echo "$SECRET_JSON" | jq -r '.db_name')
+echo "Initializing RDS database..."
+mysql -h "$RDS_ENDPOINT" -u "$RDS_USERNAME" -p"$RDS_PASSWORD" -P "$RDS_PORT" < /home/ubuntu/app/ASG/aws_launch_template/init_db.sql
 
-npm install -g pm2
-npm install
-pm2 start server.js --name "my-node-app"
-pm2 startup systemd -u ubuntu --hp /home/ubuntu
-pm2 save
+# Install application dependencies
+sudo -u ubuntu npm install
+sudo -u ubuntu npm install -g pm2
+
+# Start application
+sudo -u ubuntu pm2 start server.js --name "my-node-app"
+sudo -u ubuntu pm2 startup systemd -u ubuntu --hp /home/ubuntu
+sudo -u ubuntu pm2 save
