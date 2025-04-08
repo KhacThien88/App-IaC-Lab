@@ -39,4 +39,11 @@ resource "aws_route53_record" "app_alias" {
     evaluate_target_health = false
   }
 }
+resource "aws_route53_record" "cloudfront_cname" {
+  zone_id = data.aws_route53_zone.dns.zone_id
+  name    = join(".", [var.site-name, data.aws_route53_zone.dns.name])
+  type    = "CNAME"
+  ttl     = 300 
+  records = ["d3jm791habmq1a.cloudfront.net"]
+}
 
