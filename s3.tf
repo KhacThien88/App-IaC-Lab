@@ -11,5 +11,5 @@ module "s3-todo-cb-cd" {
   providers = {
     aws = aws.region-master
   }
-  bucket-name = "taskapp-cb-cd"
+  bucket-name = "taskapp-cb-cd-cp"
 }
