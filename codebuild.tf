@@ -11,4 +11,5 @@ module "codebuild" {
   }
   codebuild_role_arn = module.iamrole-codebuild.arn
   s3_bucket = module.s3-todo-cb-cd.bucket
+  credential_login_secret_arn = var.credential_login_secret_arn
 }
