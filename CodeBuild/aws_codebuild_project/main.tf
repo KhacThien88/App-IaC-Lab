@@ -21,7 +21,7 @@ resource "aws_codebuild_project" "app_build" {
 
   source {
     type            = "GITHUB"
-    location        = "https://github.com/KhacThien88/CloudHCMUS_IaC_Lab01"
+    location        = "https://github.com/KhacThien88/CloudHCMUS_Lab01_BE"
     git_clone_depth = 1
 
     git_submodules_config {
