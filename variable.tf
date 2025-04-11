@@ -76,7 +76,7 @@ variable "db_username" {
 variable "name_secret" {
   type      = string
   sensitive = true
-  default   = "secret_db_mysql"
+  default   = "secret_db_mysql_2"
 }
 variable "path_to_file_key" {
   type    = string

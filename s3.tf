@@ -4,7 +4,7 @@ module "iamrole-s3" {
     aws = aws.region-master
   }
   s3_bucket_arn = module.s3-todo-cb-cd.arn
-  codebuild_id = module.codebuild.id
+  codebuild_id = module.iamrole-codebuild.id
 }
 module "s3-todo-cb-cd" {
   source = "./S3/aws_s3_bucket"

@@ -1,5 +1,5 @@
 resource "aws_codebuild_project" "app_build" {
-  name          = "taskapp-be-codebuild"
+  name          = "build-output"
   description   = "Build application for deployment"
   service_role  = var.codebuild_role_arn
 
@@ -9,12 +9,12 @@ resource "aws_codebuild_project" "app_build" {
     name           = "build-output"
     packaging      = "ZIP"
     path           = "artifacts"
-    namespace_type = "BUILD_ID"
+    namespace_type = "NONE"
   }
 
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
+    image                       = "aws/codebuild/amazonlinux-x86_64-standard:5.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
   }
