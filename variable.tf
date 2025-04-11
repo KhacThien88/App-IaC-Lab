@@ -76,7 +76,7 @@ variable "db_username" {
 variable "name_secret" {
   type      = string
   sensitive = true
-  default   = "secret_db"
+  default   = "secret_db_mysql"
 }
 variable "path_to_file_key" {
   type    = string
@@ -85,4 +85,8 @@ variable "path_to_file_key" {
 variable "instance-type-master" {
   type    = string
   default = "t2.micro"
+}
+variable "credential_login_secret_arn" {
+  type = string
+  default = "arn:aws:secretsmanager:ap-southeast-1:160885258086:secret:credential-login-qKROtS"
 }

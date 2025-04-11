@@ -1,5 +1,5 @@
 resource "aws_codebuild_project" "app_build" {
-  name          = "taskapp-be"
+  name          = "taskapp-be-codebuild"
   description   = "Build application for deployment"
   service_role  = var.codebuild_role_arn
 
