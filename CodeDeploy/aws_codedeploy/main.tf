@@ -28,13 +28,3 @@ resource "aws_codedeploy_deployment_group" "app_dg" {
     events  = ["DEPLOYMENT_FAILURE"]
   }
 }
-resource "aws_codedeploy_deployment" "deploy-todo-app" {
-  deployment_group_name = aws_codedeploy_deployment_group.app_dg.deployment_group_name
-  revision {
-    location {
-      type   = "S3"
-      bucket = var.s3_bucket
-      key    = "artifacts/build-output-${var.id_code_build}.zip"
-    }
-  }
-}

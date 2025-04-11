@@ -1,6 +1,6 @@
 resource "aws_iam_role_policy" "codebuild_s3" {
   name = "codebuild-s3-policy"
-  role = aws_iam_role.codebuild_role.id
+  role = var.codebuild_id
 
   policy = jsonencode({
     Version = "2012-10-17"
