@@ -10,4 +10,9 @@ resource "aws_autoscaling_group" "todoapp_asg" {
     id      = var.launch_template_id
     version = "$Latest"
   }
+  tag {
+    key                 = "Name"
+    value               = "codedeploy-instance"
+    propagate_at_launch = true
+  }
 }

@@ -40,7 +40,7 @@ variable "db_password" {
   sensitive = true
 }
 variable "ami_id" {
-  default = "ami-03590b2ba8f02999d"
+  default = "ami-065a492fef70f84b1"
   type    = string
 }
 variable "instance_type" {
@@ -76,7 +76,7 @@ variable "db_username" {
 variable "name_secret" {
   type      = string
   sensitive = true
-  default   = "mysqldb_lab01_hcmus-v1.1"
+  default   = "secret_db"
 }
 variable "path_to_file_key" {
   type    = string

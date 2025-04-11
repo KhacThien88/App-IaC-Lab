@@ -7,7 +7,7 @@ resource "aws_db_instance" "mysql" {
   username             = var.username
   password             = var.password
   db_name              = var.db_name
-  publicly_accessible  = true
+  publicly_accessible  = false
   storage_type         = "gp2"
   vpc_security_group_ids = [var.sg_db_rds_id]
   db_subnet_group_name = var.db_subnet_group_name
