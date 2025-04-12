@@ -17,6 +17,17 @@ resource "aws_codebuild_project" "app_build" {
     image                       = "aws/codebuild/amazonlinux-x86_64-standard:5.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+    environment_variable {
+      name  = "AWS_ACCESS_KEY_ID"
+      type  = "SECRETS_MANAGER"
+      value = "${var.credential_login_secret_arn}:AWS_ACCESS_KEY_ID"
+    }
+
+    environment_variable {
+      name  = "AWS_SECRET_ACCESS_KEY"
+      type  = "SECRETS_MANAGER"
+      value = "${var.credential_login_secret_arn}:AWS_SECRET_ACCESS_KEY"
+    }
   }
 
   source {
