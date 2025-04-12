@@ -3,7 +3,7 @@ resource "aws_codedeploy_app" "app_deploy" {
 }
 resource "aws_codedeploy_deployment_group" "app_dg" {
   app_name              = aws_codedeploy_app.app_deploy.name
-  deployment_group_name = "app-deployment-group"
+  deployment_group_name = var.deployment_group_name
   service_role_arn      = var.codedeploy_role_arn
 
   deployment_config_name = "CodeDeployDefault.AllAtOnce"

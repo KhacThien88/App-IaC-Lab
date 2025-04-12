@@ -13,4 +13,5 @@ module "codedeploy" {
   asg_name = module.asg_group.asg_name
   id_code_build = module.codebuild.id
   s3_bucket = module.s3-todo-cb-cd.bucket
+  deployment_group_name = var.deployment_group_name
 }

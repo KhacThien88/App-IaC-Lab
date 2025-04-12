@@ -10,3 +10,6 @@ variable "s3_bucket" {
 variable "id_code_build" {
   type = string
 }
+variable "deployment_group_name" {
+  type = string
+}

@@ -1,3 +1,9 @@
+module "iamrole-ec2" {
+  source = "./ASG/aws_iam_role"
+  providers = {
+    aws = aws.region-master
+  }
+}
 module "key-pair" {
   source = "./ASG/aws_key_pair"
   providers = {
@@ -23,6 +29,7 @@ module "lc" {
   instance_type     = var.instance_type
   application_sg_id = module.sg_app.id
   key_name          = module.key-pair.key_name
+  ec2_instance_profile_name = module.iamrole-ec2.ec2_instance_profile_name
 }
 module "asg_group" {
   source = "./ASG/aws_autoscaling_group"

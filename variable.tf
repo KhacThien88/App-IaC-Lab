@@ -76,7 +76,7 @@ variable "db_username" {
 variable "name_secret" {
   type      = string
   sensitive = true
-  default   = "secret_db_mysql_2"
+  default   = "secrett_db_mysql_3"
 }
 variable "path_to_file_key" {
   type    = string
@@ -85,6 +85,10 @@ variable "path_to_file_key" {
 variable "instance-type-master" {
   type    = string
   default = "t2.micro"
+}
+variable "deployment_group_name" {
+  type = string
+  default = "app-deployment-group"
 }
 variable "credential_login_secret_arn" {
   type = string

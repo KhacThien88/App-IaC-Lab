@@ -19,7 +19,7 @@ resource "aws_codepipeline" "app_pipeline" {
 
       configuration = {
         S3Bucket = var.s3_bucket
-        S3ObjectKey = "artifacts/build-output.zip"
+        S3ObjectKey = "artifacts/build-output"
       }
     }
   }

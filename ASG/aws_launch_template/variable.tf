@@ -10,3 +10,6 @@ variable "instance_type" {
 variable "key_name"{
   type = string
 }
+variable "ec2_instance_profile_name" {
+  type = string
+}
