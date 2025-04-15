@@ -76,7 +76,7 @@ variable "db_username" {
 variable "name_secret" {
   type      = string
   sensitive = true
-  default   = "secrett_db_mysql_5"
+  default   = "db_secret_connect_1"
 }
 variable "path_to_file_key" {
   type    = string
@@ -93,4 +93,16 @@ variable "deployment_group_name" {
 variable "credential_login_secret_arn" {
   type = string
   default = "arn:aws:secretsmanager:ap-southeast-1:160885258086:secret:credential-login-qKROtS"
+}
+variable "topic_sns_codepipeline_failed" {
+  type = string
+  default = "codepipeline-failure-notifications"
+}
+variable "name_function" {
+  type = string
+  default = "diagnose_failed"
+}
+variable "eventbridge_name"{
+  type = string
+  default = "codepipeline-failure"
 }
