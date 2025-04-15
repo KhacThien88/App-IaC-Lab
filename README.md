@@ -1,2 +1,3 @@
 Architecture in this project: 
-![image](https://github.com/user-attachments/assets/8b257bc3-9d40-4c63-92a1-d2f487e7190d)
+![image](https://github.com/user-attachments/assets/1821ee23-89e7-45bc-aabd-65692072b776)
+
