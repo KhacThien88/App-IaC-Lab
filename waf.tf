@@ -10,4 +10,5 @@ module "waf-cloudfront"{
     providers = {
         aws = aws.region-master
     }
+    
 }
