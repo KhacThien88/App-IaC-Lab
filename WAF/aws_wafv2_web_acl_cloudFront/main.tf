@@ -1,6 +1,6 @@
 resource "aws_wafv2_web_acl" "cloudfront_waf" {
   name        = "cloudfront-waf-acl"
-  description = "WAF for existing CloudFront distribution"
+  description = "WAF for CloudFront"
   scope       = "CLOUDFRONT"
 
   default_action {
@@ -8,7 +8,7 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
   }
 
   rule {
-    name     = "block-sql-injection"
+    name     = "common-rule-set"
     priority = 1
 
     action {
@@ -17,36 +17,14 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
 
     statement {
       managed_rule_group_statement {
-        name        = "AWSManagedRulesSQLiRuleSet"
+        name        = "AWSManagedRulesCommonRuleSet"
         vendor_name = "AWS"
       }
     }
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "blockSQLInjection"
-      sampled_requests_enabled   = true
-    }
-  }
-
-  rule {
-    name     = "rate-limit"
-    priority = 2
-
-    action {
-      block {}
-    }
-
-    statement {
-      rate_based_statement {
-        limit              = 2000
-        aggregate_key_type = "IP"
-      }
-    }
-
-    visibility_config {
-      cloudwatch_metrics_enabled = true
-      metric_name                = "rateLimit"
+      metric_name                = "cloudfrontCommonRuleSet"
       sampled_requests_enabled   = true
     }
   }
@@ -56,4 +34,9 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     metric_name                = "cloudfrontWAF"
     sampled_requests_enabled   = true
   }
+}
+
+resource "aws_wafv2_web_acl_association" "cloudfront_waf_association" {
+  resource_arn = var.cloudfront_distribution_arn
+  web_acl_arn  = aws_wafv2_web_acl.cloudfront_waf.arn
 }

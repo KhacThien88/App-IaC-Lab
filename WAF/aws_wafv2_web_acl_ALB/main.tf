@@ -1,5 +1,5 @@
 resource "aws_wafv2_web_acl" "alb_waf" {
-  name        = "alb-waf-acl"
+  name        = "alb-waf"
   description = "WAF for ALB"
   scope       = "REGIONAL"
 
@@ -8,7 +8,7 @@ resource "aws_wafv2_web_acl" "alb_waf" {
   }
 
   rule {
-    name     = "block-sql-injection"
+    name     = "common-rule-set"
     priority = 1
 
     action {
@@ -17,22 +17,21 @@ resource "aws_wafv2_web_acl" "alb_waf" {
 
     statement {
       managed_rule_group_statement {
-        name        = "AWSManagedRulesSQLiRuleSet"
+        name        = "AWSManagedRulesCommonRuleSet"
         vendor_name = "AWS"
       }
     }
 
     visibility_config {
       cloudwatch_metrics_enabled = true
-      metric_name                = "blockSQLInjection"
+      metric_name                = "commonRuleSet"
       sampled_requests_enabled   = true
     }
   }
-  
 
   visibility_config {
     cloudwatch_metrics_enabled = true
-    metric_name                = "albWAF"
+    metric_name                = "exampleWAF"
     sampled_requests_enabled   = true
   }
 }
