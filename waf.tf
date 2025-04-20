@@ -10,5 +10,4 @@ module "waf-cloudfront"{
     providers = {
         aws = aws.us-east-1
     }
-    cloudfront_distribution_arn = module.cloudFront.arn
 }
