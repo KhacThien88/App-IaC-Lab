@@ -19,7 +19,6 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
       managed_rule_group_statement {
         name        = "AWSManagedRulesSQLiRuleSet"
         vendor_name = "AWS"
-        version     = "1.0"
       }
     }
 

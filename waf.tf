@@ -8,7 +8,7 @@ module "waf-alb"{
 module "waf-cloudfront"{
     source = "./WAF/aws_wafv2_web_acl_cloudFront"
     providers = {
-        aws = aws.region-master
+        aws = "us-east-1"
     }
-    
+
 }
