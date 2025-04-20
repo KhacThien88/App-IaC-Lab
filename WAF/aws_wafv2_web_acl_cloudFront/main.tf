@@ -11,14 +11,34 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     name     = "common-rule-set"
     priority = 1
 
-    action {
-      block {}
+    override_action {
+      count {}
     }
 
     statement {
       managed_rule_group_statement {
         name        = "AWSManagedRulesCommonRuleSet"
         vendor_name = "AWS"
+
+        rule_action_override {
+          name = "SizeRestrictions_QUERYSTRING"
+          action_to_use {
+            count {}
+          }
+        }
+
+        rule_action_override {
+          name = "NoUserAgent_HEADER"
+          action_to_use {
+            count {}
+          }
+        }
+
+        scope_down_statement {
+          geo_match_statement {
+            country_codes = ["VN", "US"]
+          }
+        }
       }
     }
 
@@ -34,6 +54,13 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     metric_name                = "cloudfrontWAF"
     sampled_requests_enabled   = true
   }
+
+  tags = {
+    Environment = "production"
+    Application = "cloudfront"
+  }
+
+  token_domains = ["yourwebsite.com", "cdn.yourwebsite.com"]
 }
 
 resource "aws_wafv2_web_acl_association" "cloudfront_waf_association" {
