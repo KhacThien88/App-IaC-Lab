@@ -1,5 +1,5 @@
 variable "s3_bucket_name" {
-  default = "taskappbuckethcmus"
+  default = "taskappbuckethcmus-cf"
 }
 variable "wafcloudfront-arn" {
   type = string

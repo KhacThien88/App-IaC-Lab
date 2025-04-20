@@ -59,11 +59,5 @@ resource "aws_wafv2_web_acl" "cloudfront_waf" {
     Environment = "production"
     Application = "cloudfront"
   }
-
-  token_domains = ["yourwebsite.com", "cdn.yourwebsite.com"]
 }
 
-resource "aws_wafv2_web_acl_association" "cloudfront_waf_association" {
-  resource_arn = var.cloudfront_distribution_arn
-  web_acl_arn  = aws_wafv2_web_acl.cloudfront_waf.arn
-}

@@ -1,6 +1,6 @@
 resource "aws_cloudfront_distribution" "taskapp_distribution" {
   origin {
-    domain_name = "${var.s3_bucket_name}.s3-website-ap-southeast-1.amazonaws.com"
+    domain_name = "${var.s3_bucket_name}.s3-website-us-east-1.amazonaws.com"
     origin_id   = "S3-taskappbuckethcmus"
 
     custom_origin_config {
@@ -10,7 +10,7 @@ resource "aws_cloudfront_distribution" "taskapp_distribution" {
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
-
+  
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
